@@ -16,6 +16,7 @@ const pro = new Promise((res, rej) => {
   console.log(5);
 });
 pro.then((res) => console.log(res));
+console.log(6);
 
 class Promisere {
   static PENDING = "PENDING";
@@ -36,7 +37,27 @@ class Promisere {
     this.STATUS = Promisere.FULLFILLED;
     this.RESULT = res;
   }
-  reject(res) {}
+  reject(res) {
+    this.STATUS = Promisere.REJECTED;
+    this.RESULT = res;
+  }
 
-  then(onFULLFILLED, onREJECTED) {}
+  then(onFULLFILLED, onREJECTED) {
+    switch (this.STATUS) {
+      case Promisere.PENDING:
+        this.resolveCallbacks.push(onFULLFILLED);
+        this.rejectCallbacks.push(onREJECTED);
+        break;
+      case Promisere.FULLFILLED:
+        setTimeout(() => {
+          onFULLFILLED(this.RESULT);
+        });
+        break;
+      case Promisere.REJECTED:
+        setTimeout(() => {
+          onREJECTED(this.RESULT);
+        });
+        break;
+    }
+  }
 }
