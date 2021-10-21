@@ -63,12 +63,15 @@ class Commitment {
 
 let com = new Commitment((res, rej) => {
   console.log(1);
+
   setTimeout(() => {
+    console.log("settimeout");
     console.log(2);
     res(4);
     console.log(3);
   });
 });
 com.then((res) => {
+  console.log("then");
   console.log(res);
 });

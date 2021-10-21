@@ -8,14 +8,19 @@
 
 // const pro = new Promise((res, rej) => {
 //   console.log(1);
+//   res(7);
 //   setTimeout(() => {
+//     console.log("settimeout");
 //     console.log(2);
-//     res(3);
+//     // res(3);
 //     console.log(4);
-//   }, 1000);
+//   });
 //   console.log(5);
 // });
-// pro.then((res) => console.log(res));
+// pro.then((res) => {
+//   console.log("then");
+//   console.log(res);
+// });
 // console.log(6);
 
 class Promisere {
@@ -62,6 +67,7 @@ class Promisere {
   // 二是当状态的确定是在异步中的，那么确定状态后还会再次回调
   // 换句话说then中的回调如果在then阶段没有调用，那么最终回归到resovle或者reject阶段调用
   then(onFULLFILLED, onREJECTED) {
+    // return new Promisere((res, rej) => {
     switch (this.STATUS) {
       case Promisere.PENDING:
         this.resolveCallbacks.push(onFULLFILLED);
@@ -78,17 +84,23 @@ class Promisere {
         });
         break;
     }
+    // });
   }
 }
 
 const pro = new Promisere((res, rej) => {
   console.log(1);
+  res(7);
   setTimeout(() => {
+    console.log("settimeout");
     console.log(2);
-    res(3);
+    // res(3);
     console.log(4);
-  }, 1000);
+  });
   console.log(5);
 });
-pro.then((res) => console.log(res));
+pro.then((res) => {
+  console.log("then");
+  console.log(res);
+});
 console.log(6);
