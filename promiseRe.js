@@ -42,6 +42,14 @@ class Promisere {
     this.RESULT = res;
   }
 
+  // then中异步和resolve，reject中的异步是不同的
+  // then中的异步是为了执行到then时异步
+  // resolve和reject中的异步是为了在调取callbacks数组是异步，否则会同步
+  // 调用then时如果状态确定了，那么执行回调
+  // 如果没有确定状态，那么缓存回调函数，之后在确定状态后再次回调
+  // 也就是说res的作用其实有两个
+  // 一是确定状态
+  // 二是当状态的确定是在异步中的，那么确定状态后还会再次回调
   then(onFULLFILLED, onREJECTED) {
     switch (this.STATUS) {
       case Promisere.PENDING:
