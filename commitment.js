@@ -62,5 +62,13 @@ class Commitment {
 }
 
 let com = new Commitment((res, rej) => {
-  res("123");
+  console.log(1);
+  setTimeout(() => {
+    console.log(2);
+    res(4);
+    console.log(3);
+  });
+});
+com.then((res) => {
+  console.log(res);
 });
