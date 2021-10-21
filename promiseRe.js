@@ -60,6 +60,7 @@ class Promisere {
   // 也就是说res的作用其实有两个
   // 一是确定状态
   // 二是当状态的确定是在异步中的，那么确定状态后还会再次回调
+  // 换句话说then中的回调如果在then阶段没有调用，那么最终回归到resovle或者reject阶段调用
   then(onFULLFILLED, onREJECTED) {
     switch (this.STATUS) {
       case Promisere.PENDING:
