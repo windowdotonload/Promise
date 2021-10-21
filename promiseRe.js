@@ -6,17 +6,17 @@
 
 // origin Promise
 
-const pro = new Promise((res, rej) => {
-  console.log(1);
-  setTimeout(() => {
-    console.log(2);
-    res(3);
-    console.log(4);
-  }, 1000);
-  console.log(5);
-});
-pro.then((res) => console.log(res));
-console.log(6);
+// const pro = new Promise((res, rej) => {
+//   console.log(1);
+//   setTimeout(() => {
+//     console.log(2);
+//     res(3);
+//     console.log(4);
+//   }, 1000);
+//   console.log(5);
+// });
+// pro.then((res) => console.log(res));
+// console.log(6);
 
 class Promisere {
   static PENDING = "PENDING";
@@ -34,12 +34,22 @@ class Promisere {
     }
   }
   resolve(res) {
-    this.STATUS = Promisere.FULLFILLED;
-    this.RESULT = res;
+    if (this.STATUS == Promisere.PENDING) {
+      this.STATUS = Promisere.FULLFILLED;
+      this.RESULT = res;
+      setTimeout(() => {
+        this.resolveCallbacks.forEach((callback) => callback(this.RESULT));
+      });
+    }
   }
   reject(res) {
-    this.STATUS = Promisere.REJECTED;
-    this.RESULT = res;
+    if (this.STATUS == Promisere.PENDING) {
+      this.STATUS = Promisere.REJECTED;
+      this.RESULT = res;
+      setTimeout(() => {
+        this.s.forEach((callback) => callback(this.RESULT));
+      });
+    }
   }
 
   // then中异步和resolve，reject中的异步是不同的
@@ -69,3 +79,15 @@ class Promisere {
     }
   }
 }
+
+const pro = new Promisere((res, rej) => {
+  console.log(1);
+  setTimeout(() => {
+    console.log(2);
+    res(3);
+    console.log(4);
+  }, 1000);
+  console.log(5);
+});
+pro.then((res) => console.log(res));
+console.log(6);
