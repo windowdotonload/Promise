@@ -8,6 +8,8 @@
   </head>
   <body>
     <script>
+      // 链式调用或者promise.all中的then取决于上一个then，上一个then return一个普通指，那么接收的参数就是这个值
+      // 如果返回一个promise，那么取决于这个promise的状态
       const p1 = new Promise((res, rej) => {
         res("hello");
       }).then((res) => {
